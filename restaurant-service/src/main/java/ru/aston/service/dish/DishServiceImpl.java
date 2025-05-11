@@ -71,6 +71,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    @Transactional
     public DishDto addDish(DishDto dishDto) {
         log.info("Добавление блюда: {}", dishDto.getName());
 
@@ -82,6 +83,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    @Transactional
     public DishDto updateDish(Long id, UpdateDishDto updateDishDto) {
         log.info("Обновление блюда с id: {}", id);
 
@@ -113,6 +115,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    @Transactional
     public void deleteDish(Long id) {
         log.info("Удаление блюда с id: {}", id);
 
