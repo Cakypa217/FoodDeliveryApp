@@ -1,0 +1,30 @@
+services:
+  restaurant-service:
+    build:
+      context: ./restaurant-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://restaurant-db:5432/restaurant_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - restaurant-db
+    networks:
+      - backend
+
+  restaurant-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: restaurant_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
