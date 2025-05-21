@@ -1,9 +1,11 @@
 package ru.aston.dto;
 
+import java.math.BigDecimal;
+
 public record OrderItemDto (
     Long id,
-    Long productId,
+    Long ordersId,
     String productName,
     Integer quantity,
-    Double price
+    BigDecimal price
 ) {}

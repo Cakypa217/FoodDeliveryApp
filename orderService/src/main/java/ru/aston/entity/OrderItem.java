@@ -1,15 +1,14 @@
 package ru.aston.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Entity
 @Data
+@ToString(exclude = "orders")
 public class OrderItem {
     @Id
     @GeneratedValue
@@ -18,8 +17,15 @@ public class OrderItem {
     @ManyToOne
     private Orders orders;
 
-    private String itemName;
+    private String productName;
     private Integer quantity;
     private BigDecimal price;
+
+    @Transient
+    public BigDecimal getTotalPrice() {
+        return price != null && quantity != null
+                ? price.multiply(BigDecimal.valueOf(quantity))
+                : BigDecimal.ZERO;
+    }
 }
 

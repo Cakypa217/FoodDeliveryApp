@@ -1,7 +1,7 @@
 -- Вставка заказов
 INSERT INTO orders (user_id, restaurant_id, created_at, status, total_price) VALUES
-(101, 1, NOW(), 'CREATED', 25.50),
-(102, 2, NOW(), 'COMPLETED', 40.00),
+(101, 1, NOW(), 'NEW', 25.50),
+(102, 2, NOW(), 'DELIVERED', 40.00),
 (103, 1, NOW(), 'CANCELLED', 0.00);
 
 -- Вставка позиций заказа

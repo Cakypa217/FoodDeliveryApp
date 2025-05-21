@@ -1,50 +1,17 @@
 package ru.aston.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.aston.dto.OrderItemDto;
-import ru.aston.entity.OrderItem;
-import ru.aston.mapper.OrderItemMapper;
-import ru.aston.repository.OrderItemRepository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-public class OrderItemService {
+public interface OrderItemService {
+    List<OrderItemDto> getAll();
 
-    private final OrderItemRepository orderItemRepository;
-    private final OrderItemMapper orderItemMapper;
+    OrderItemDto getById(Long id);
 
-    public List<OrderItemDto> getAll() {
-        return orderItemRepository.findAll().stream()
-                .map(orderItemMapper::toDto)
-                .collect(Collectors.toList());
-    }
+    OrderItemDto create(OrderItemDto dto);
 
-    public OrderItemDto getById(Long id) {
-        return orderItemRepository.findById(id)
-                .map(orderItemMapper::toDto)
-                .orElse(null);
-    }
+    OrderItemDto update(Long id, OrderItemDto dto);
 
-    public OrderItemDto create(OrderItemDto dto) {
-
-        OrderItem orderItem = orderItemMapper.toEntity(dto);
-        OrderItem savedItem = orderItemRepository.save(orderItem);
-        return orderItemMapper.toDto(savedItem);
-    }
-
-    public OrderItemDto update(Long id, OrderItemDto dto) {
-        OrderItem orderItem = orderItemMapper.toEntity(dto);
-        orderItem.setId(id);
-        OrderItem updatedItem = orderItemRepository.save(orderItem);
-        return orderItemMapper.toDto(updatedItem);
-    }
-
-    public void delete(Long id) {
-        orderItemRepository.deleteById(id);
-    }
+    void delete(Long id);
 }

@@ -2,6 +2,7 @@ package ru.aston.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,13 +12,15 @@ import java.util.List;
 @Data
 public class Orders {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;
+
     private Long restaurantId;
 
     private LocalDateTime createdAt;
+
     @Enumerated(EnumType.STRING )
     @Column(name = "status")
     private OrderStatus status;
