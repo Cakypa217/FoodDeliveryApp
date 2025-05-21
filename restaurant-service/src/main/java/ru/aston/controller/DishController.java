@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.aston.model.dto.DishDto;
 import ru.aston.model.dto.ShortDishDto;
@@ -22,40 +21,37 @@ public class DishController {
 
     @GetMapping
     public List<ShortDishDto> getAllDishes(
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String ingredient,
-            @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-            @RequestParam(defaultValue = "10") @Positive Integer size) {
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "ingredient", required = false) String ingredient,
+            @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
+            @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
         return dishService.getAllDishes(category, ingredient, from, size);
     }
 
     @GetMapping("/{id}")
-    public ShortDishDto getDishById(@PathVariable Long id) {
+    public ShortDishDto getDishById(@PathVariable("id") Long id) {
         return dishService.getDishById(id);
     }
 
     @GetMapping("/search")
-    public List<DishDto> searchDishes(@RequestParam String query) {
+    public List<DishDto> searchDishes(@RequestParam(name = "query") String query) {
         return dishService.searchDishes(query);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public DishDto addDish(@RequestBody DishDto dishDto) {
         return dishService.addDish(dishDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/update/{id}")
-    public DishDto updateDish(@PathVariable Long id, @RequestBody UpdateDishDto updateDishDto) {
+    public DishDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishDto updateDishDto) {
         return dishService.updateDish(id, updateDishDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDish(@PathVariable Long id) {
+    public void deleteDish(@PathVariable("id") Long id) {
         dishService.deleteDish(id);
     }
 }

@@ -37,8 +37,9 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientDto addIngredient(IngredientDto ingredientDto) {
         log.info("Добавление ингредиента: {}", ingredientDto.getName());
 
-        Ingredient ingredient = ingredientRepository.save(ingredientMapper.toEntity(ingredientDto));
-        IngredientDto newIngredientDto = ingredientMapper.toDto(ingredient);
+        Ingredient ingredient = ingredientMapper.toEntity(ingredientDto);
+        Ingredient ingredientSave = ingredientRepository.save(ingredient);
+        IngredientDto newIngredientDto = ingredientMapper.toDto(ingredientSave);
 
         log.info("Ингредиент добавлен: {}", newIngredientDto.getName());
         return newIngredientDto;

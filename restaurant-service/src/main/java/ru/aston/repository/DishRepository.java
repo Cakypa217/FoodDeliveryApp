@@ -17,15 +17,15 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
             JOIN d.category c
             JOIN d.ingredients i
             WHERE (:category IS NULL OR c.name = :category)
-            AND (:ingredient IS NULL OR LOWER(i.name) LIKE LOWER(CONCAT('%', :ingredient, '%')))
+            AND (:ingredient IS NULL OR i.name LIKE %:ingredient%)
             GROUP BY d.id
             ORDER BY d.name ASC
             """)
     List<Dish> searchByCriteria(
             @Param("category") String category,
             @Param("ingredient") String ingredient,
-            Pageable pageable
-    );
+            Pageable pageable);
+
 
     @Query("""
             SELECT d FROM Dish d
