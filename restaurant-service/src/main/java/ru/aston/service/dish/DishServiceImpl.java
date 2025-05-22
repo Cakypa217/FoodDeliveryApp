@@ -64,6 +64,7 @@ public class DishServiceImpl implements DishService {
         log.info("Получение блюда с id: {}", id);
 
         Dish dish = dishById(id);
+        System.out.println(dish.toString());
         ShortDishDto shortDishDto = dishMapper.toShortDto(dish);
 
         log.info("Получено блюдо: {}", shortDishDto.getName());

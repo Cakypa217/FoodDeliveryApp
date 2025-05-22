@@ -56,4 +56,17 @@ public class Dish {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", weight=" + weight +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", category=" + (category != null ? category.getName() : "null") +
+                '}';
+    }
 }
