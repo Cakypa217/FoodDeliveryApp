@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Mapper(componentModel = "spring", uses = OrderItemMapper.class)
 public interface OrdersMapper {
     @Mapping(target = "totalPrice", expression = "java(calculateTotalPrice(entity))")
+    @Mapping(target = "userId", source = "userId")
     OrdersDto toDto(Orders entity);
 
     Orders toEntity(OrdersDto dto);

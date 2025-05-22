@@ -16,20 +16,17 @@ public class IngredientController {
 
     private final IngredientService ingredientService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<IngredientDto> getAllIngredients() {
         return ingredientService.getAllIngredients();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public IngredientDto addIngredient(@RequestBody IngredientDto ingredientDto) {
         return ingredientService.addIngredient(ingredientDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteIngredient(@PathVariable Long id) {
