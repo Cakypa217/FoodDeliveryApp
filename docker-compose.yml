@@ -1,5 +1,9 @@
-
 version: '3.8'
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
 
 services:
   # БД для restaurant-service
@@ -14,6 +18,11 @@ services:
       - "5433:5432"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   # БД для user-service
   user-db:
@@ -27,6 +36,29 @@ services:
       - "5434:5432"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # БД для order-service
+  order-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: order_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 111
+    ports:
+      - "5056:5432"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   # restaurant-service
   restaurant-service:
@@ -39,7 +71,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
-      - restaurant-db
+      restaurant-db:
+        condition: service_healthy
     networks:
       - backend
 
@@ -54,7 +87,24 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
-      - user-db
+      user-db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  # order-service
+  order-service:
+    build:
+      context: ./orderService
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://order-db:5432/order_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=111
+    depends_on:
+      order-db:
+        condition: service_healthy
     networks:
       - backend
 
@@ -69,11 +119,11 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      - restaurant-db
-      - user-db
+      order-db:
+        condition: service_healthy
+      restaurant-db:
+        condition: service_healthy
+      user-db:
+        condition: service_healthy
     networks:
       - backend
-
-networks:
-  backend:
-    driver: bridge

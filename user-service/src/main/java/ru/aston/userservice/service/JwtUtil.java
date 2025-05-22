@@ -4,6 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import ru.aston.userservice.entity.Role;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class JwtUtil {
 
@@ -12,6 +17,15 @@ public class JwtUtil {
     public static String generateToken(String username) {
         return JWT.create()
                 .withSubject(username)
+                .sign(Algorithm.HMAC256(SECRET_KEY));
+    }
+    public static String generateToken(Set<Role> roles) {
+        List<String> roleNames = roles.stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+
+        return JWT.create()
+                .withClaim("roles", roleNames)
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 

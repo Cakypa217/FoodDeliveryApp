@@ -4,7 +4,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.aston.userservice.dto.OrderDTO;
+import ru.aston.dto.OrdersDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +18,9 @@ public class OrderClient {
         this.restTemplate = builder.build();
     }
 
-    public List<OrderDTO> getOrders(Long userId) {
-        String url = "http://order-service/users/" + userId + "/orders";
-        ResponseEntity<OrderDTO[]> response = restTemplate.getForEntity(url, OrderDTO[].class);
+    public List<OrdersDto> getOrders(Long userId) {
+        String url = "http://localhost:8088/api/v1/orders/user/" + userId;
+        ResponseEntity<OrdersDto> response = restTemplate.getForEntity(url, OrdersDto.class);
         return Arrays.asList(response.getBody());
     }
 

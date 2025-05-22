@@ -39,6 +39,11 @@ public class OrdersServiceImpl implements OrdersService {
                 .map(ordersMapper::toDto);
     }
 
+    public Optional<OrdersDto> getByUserId(Long id){
+        return ordersRepository.findByUserId(id)
+                .map(ordersMapper::toDto);
+    }
+
     public OrdersDto create(OrdersDto dto) {
         // 1. Найти корзину пользователя
         Cart cart = cartRepository.findByUserId(dto.userId())

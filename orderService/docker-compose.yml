@@ -1,4 +1,5 @@
 version: '3.8'
+
 networks:
   pg-net:
     name: pg-net
@@ -18,7 +19,7 @@ services:
     networks:
       - pg-net
   # PostgreSQL
-  postgres:
+  order-db:
     image: postgres:15
     container_name: postgres_db2
     restart: always

@@ -29,6 +29,12 @@ public class OrdersController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<OrdersDto> getOrderByUserId(@PathVariable Long id){
+        return ordersServiceImpl.getByUserId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
     public ResponseEntity<OrdersDto> createOrder(@RequestBody OrdersDto dto) {

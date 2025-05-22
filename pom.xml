@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>orderService</module>
         <module>restaurant-service</module>
         <module>user-service</module>
     </modules>
@@ -17,7 +18,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>3.4.3</spring-boot.version>
+        <spring-boot.version>3.4.5</spring-boot.version>
     </properties>
 
     <dependencyManagement>

@@ -1,14 +1,12 @@
 spring:
+  docker:
+    compose:
+      enabled: false
   datasource:
-    url: jdbc:postgresql://restaurant-db:5432/restaurant_db
+    url: jdbc:postgresql://localhost:5433/restaurant_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-    hikari:
-      connection-timeout: 60000
-      maximum-pool-size: 5
-      minimum-idle: 1
-      initialization-fail-timeout: 60000
   jpa:
     hibernate:
       ddl-auto: validate

@@ -12,7 +12,6 @@ public interface OrderItemMapper {
     @Mapping(target = "ordersId", source = "orders.id")
     OrderItemDto toDto(OrderItem entity);
 
-    @Mapping(target = "orders", expression = "java(mapOrders(dto.ordersId()))")
     OrderItem toEntity(OrderItemDto dto);
 
     default Orders mapOrders(Long id) {
