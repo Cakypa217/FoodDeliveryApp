@@ -14,7 +14,6 @@ public interface CartMapper {
             target = "totalCartPrice",
             expression = "java(calculateTotalCartPrice(cart))"
     )
-    @Mapping(target = "userId", source = "userId")
     CartDto toDto(Cart cart);
 
     Cart toEntity(CartDto cartDto);

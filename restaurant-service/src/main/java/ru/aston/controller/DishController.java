@@ -39,20 +39,17 @@ public class DishController {
         return dishService.searchDishes(query);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public DishDto addDish(@RequestBody DishDto dishDto) {
         return dishService.addDish(dishDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/update/{id}")
     public DishDto updateDish(@PathVariable Long id, @RequestBody UpdateDishDto updateDishDto) {
         return dishService.updateDish(id, updateDishDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDish(@PathVariable Long id) {

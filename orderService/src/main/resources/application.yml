@@ -8,6 +8,8 @@ server:
   port: 8088
 
 spring:
+  flyway:
+    locations: classpath:db/migration/order
   application:
     name: order-service
   datasource:
@@ -23,5 +25,7 @@ spring:
 
 flyway:
     enabled: true
-    locations: classpath:db/migration
+    locations: classpath:db/migration/order
     baseline-on-migrate: true
+dish-service:
+  url: http://localhost:8080

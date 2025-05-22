@@ -8,7 +8,7 @@ import ru.aston.entity.CartItem;
 @Mapper(componentModel = "spring")
 public interface CartItemMapper {
 
-    @Mapping(target = "cartId", source = "cart.id")
+    @Mapping(target = "cartId", expression = "java(cartItem.getCart().getId())")
     @Mapping(target = "totalPrice", expression = "java(cartItem.getTotalPrice())")
     CartItemDto toDto(CartItem cartItem);
 

@@ -9,7 +9,7 @@ import ru.aston.entity.Orders;
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
 
-    @Mapping(target = "ordersId", source = "orders.id")
+    @Mapping(target = "ordersId", expression = "java(entity.getOrders().getId())")
     OrderItemDto toDto(OrderItem entity);
 
     OrderItem toEntity(OrderItemDto dto);
